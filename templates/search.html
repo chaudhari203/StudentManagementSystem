@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Search Student{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Search Student</h2>
+
+<form method="GET">
+
+    <div class="input-group mb-4">
+
+        <input
+            type="text"
+            name="keyword"
+            class="form-control"
+            placeholder="Search by name or course"
+            value="{{ keyword }}">
+
+        <button class="btn btn-primary">
+            Search
+        </button>
+
+    </div>
+
+</form>
+
+<table class="table table-bordered table-striped">
+
+    <thead class="table-dark">
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Course</th>
+            <th>Marks</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    {% for student in students %}
+
+        <tr>
+
+            <td>{{ student.id }}</td>
+            <td>{{ student.name }}</td>
+            <td>{{ student.age }}</td>
+            <td>{{ student.course }}</td>
+            <td>{{ student.marks }}</td>
+
+        </tr>
+
+    {% else %}
+
+        <tr>
+
+            <td colspan="5" class="text-center">
+
+                No students found.
+
+            </td>
+
+        </tr>
+
+    {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1 class="text-center mb-5">
+        Student Management Dashboard
+    </h1>
+
+    <!-- ================= Dashboard Cards ================= -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2 class="text-primary">{{ total_students }}</h2>
+                    <h5>Total Students</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2 class="text-success">{{ average_marks }}</h2>
+                    <h5>Average Marks</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2 class="text-danger">{{ highest_marks }}</h2>
+                    <h5>Highest Marks</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow border-0 text-center">
+                <div class="card-body">
+                    <h2 class="text-warning">{{ total_courses }}</h2>
+                    <h5>Total Courses</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= Charts ================= -->
+
+    <div class="row mt-5">
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body">
+
+                   <h5 class="fw-bold mb-1">
+    <i class="bi bi-bar-chart-fill text-primary me-2"></i>
+    Students Per Course
+</h5>
+
+                    <canvas
+                        id="barChart"
+                        data-labels='{{ course_labels | tojson }}'
+                        data-counts='{{ course_counts | tojson }}'>
+                    </canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-body">
+
+                   <h5 class="fw-bold mb-1">
+    <i class="bi bi-pie-chart-fill text-success me-2"></i>
+    Course Distribution
+</h5>
+<canvas id="pieChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= Top Performers & Recent Students ================= -->
+
+    <div class="row mt-4">
+
+        <!-- Top Performers -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-success text-white">
+                    Top Performers
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+                                <th>Name</th>
+                                <th>Marks</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for student in top_students %}
+
+                            <tr>
+
+                                <td>{{ student.name }}</td>
+
+                                <td>{{ student.marks }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Recently Added Students -->
+
+        <div class="col-lg-6 mb-4">
+
+            <div class="card shadow border-0">
+
+                <div class="card-header bg-primary text-white">
+                    Recently Added Students
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-hover">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Name</th>
+
+                                <th>Course</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for student in recent_students %}
+
+                            <tr>
+
+                                <td>{{ student.name }}</td>
+
+                                <td>{{ student.course }}</td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= Chart JS ================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+{% endblock %}
