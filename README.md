@@ -153,7 +153,7 @@ Example:
 
 ```
 Username: admin
-Password: ********
+Password: admin123
 ```
 
 ---
