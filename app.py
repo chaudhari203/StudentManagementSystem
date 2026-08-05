@@ -18,14 +18,20 @@ from sqlalchemy import or_
 from sqlalchemy import or_, asc, desc, func
 import csv
 import io
-
+import os
 app = Flask(__name__)
 
 from models.student import db, Student, Admin
 # ===========================
 # Flask Configuration
 # ===========================
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///students.db"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///students.db"
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
+else:
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///students.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "student-management-secret"
 
